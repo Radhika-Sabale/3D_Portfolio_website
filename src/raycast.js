@@ -3,48 +3,52 @@ import * as THREE from 'three';
 export const raycaster = new THREE.Raycaster();
 export const mouse = new THREE.Vector2();
 
-let nameMesh = null;
-let doorMesh = null;
+const interactiveObjects = [];
 
-export function setNameMesh(mesh) {
-  nameMesh = mesh;
+export function registerInteractiveObject(mesh, callback, hoverTitle = '') {
+  if (!mesh) return;
+  interactiveObjects.push({ mesh, callback, hoverTitle });
 }
 
-export function setDoorMesh(mesh) {
-  doorMesh = mesh;
-}
+export function setupRaycasting(camera, renderer) {
+  let downX = 0;
+  let downY = 0;
 
-export function setupRaycasting(camera, renderer, onNameClick, onDoorClick) {
-  window.addEventListener('click', (event) => {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  renderer.domElement.addEventListener('pointerdown', (e) => {
+    downX = e.clientX;
+    downY = e.clientY;
+  });
+
+  renderer.domElement.addEventListener('pointerup', (e) => {
+    // Only count as click if pointer barely moved (not a drag)
+    const dist = Math.hypot(e.clientX - downX, e.clientY - downY);
+    if (dist > 6) return;
+
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
 
-    if (nameMesh) {
-      const nameHit = raycaster.intersectObject(nameMesh, true);
-      if (nameHit.length > 0) {
-        onNameClick();
-        return;
-      }
-    }
-
-    if (doorMesh) {
-      const doorHit = raycaster.intersectObject(doorMesh, true);
-      if (doorHit.length > 0) {
-        onDoorClick();
+    for (const item of interactiveObjects) {
+      const hits = raycaster.intersectObject(item.mesh, true);
+      if (hits.length > 0) {
+        item.callback();
         return;
       }
     }
   });
 
-  window.addEventListener('mousemove', (event) => {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  renderer.domElement.addEventListener('pointermove', (e) => {
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
 
     let hovering = false;
-    if (nameMesh && raycaster.intersectObject(nameMesh, true).length > 0) hovering = true;
-    if (doorMesh && raycaster.intersectObject(doorMesh, true).length > 0) hovering = true;
+    for (const item of interactiveObjects) {
+      if (raycaster.intersectObject(item.mesh, true).length > 0) {
+        hovering = true;
+        break;
+      }
+    }
 
     renderer.domElement.style.cursor = hovering ? 'pointer' : 'default';
   });

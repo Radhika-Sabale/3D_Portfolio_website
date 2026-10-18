@@ -1,15 +1,27 @@
 let isOpen = false;
 let isAnimating = false;
 
+export function isDoorOpen() {
+  return isOpen;
+}
+
+export function openDoor(doorPivot, options = {}) {
+  if (isOpen) {
+    if (options.onOpenComplete) options.onOpenComplete();
+    return;
+  }
+  toggleDoor(doorPivot, options);
+}
+
 export function toggleDoor(doorPivot, options = {}) {
   if (!doorPivot || isAnimating) return;
 
-  const opening = !isOpen; // true if this click is OPENING the door
+  const opening = !isOpen;
   isAnimating = true;
 
-  const targetRotation = isOpen ? 0 : -Math.PI / 2; // unchanged — your working version
+  const targetRotation = isOpen ? 0 : -Math.PI / 2;
   const startRotation = doorPivot.rotation.y;
-  const duration = 1000; // slowed slightly to 1s so the light/camera feel less rushed
+  const duration = 900;
   const startTime = performance.now();
 
   if (opening && options.onOpenStart) options.onOpenStart();

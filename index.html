@@ -2,46 +2,298 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>3D Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Radhika Sabale | 3D Interactive Portfolio</title>
+  <meta name="description" content="Interactive 3D portfolio of Radhika Sabale - IT Student at VIT Pune, Developer, and Digital Artist." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- 3D Canvas Background -->
   <canvas id="bg"></canvas>
 
-<div id="intro-dashboard" class="dashboard-overlay hidden">
-  <div class="dashboard-panel intro-panel">
-    <button id="close-dashboard">&times;</button>
+  <!-- Top Glassmorphic Navigation -->
+  <header class="top-nav">
+    <div class="nav-brand">
+      <span class="brand-dot"></span>
+      <span class="brand-name">Radhika Sabale</span>
+      <span class="brand-tag">3D Studio</span>
+    </div>
 
-    <div class="intro-content">
-      <div class="intro-photo">
-        <img src="/radhika.jpg" alt="Radhika Sabale" />
-      </div>
+    <nav class="nav-pills" id="nav-pills">
+      <button class="nav-btn active" data-section="intro">
+        <span class="nav-num">01</span> Intro
+      </button>
+      <button class="nav-btn" data-section="projects">
+        <span class="nav-num">02</span> Projects
+      </button>
+      <button class="nav-btn" data-section="gallery">
+        <span class="nav-num">03</span> Gallery
+      </button>
+      <button class="nav-btn" data-section="contact">
+        <span class="nav-num">04</span> Contact
+      </button>
+    </nav>
+  </header>
 
-      <div class="intro-text">
-        <h2>Radhika Sabale</h2>
-        <p class="intro-role">Information Technology Student · VIT Pune</p>
+  <!-- Free 360 Drag Exploration Hint -->
+  <div id="drag-hint" class="drag-hint">
+    <div class="drag-icon-wrapper">
+      <svg class="drag-rotate-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+      </svg>
+    </div>
+    <div class="drag-hint-text">
+      <strong>Click & Drag freely</strong> anywhere to look around in 360°
+    </div>
+  </div>
 
-        <p>
-          I’m an Information Technology student at VIT Pune interested in building practical, real-world tech solutions. I work with C, C++, and Python, have experience in web development and data tools like NumPy and pandas, and I’m currently strengthening my problem-solving skills through Data Structures and Algorithms while exploring data analysis and computer vision.
-        </p>
+  <!-- Dynamic Section Floating Card -->
+  <div id="section-card" class="section-card">
+    <div class="section-card-content">
+      <div class="section-tag" id="card-tag">SECTION 01</div>
+      <h3 class="section-title" id="card-title">Welcome & Intro</h3>
+      <p class="section-subtitle" id="card-subtitle">Outside entrance · Floating glowing name & door</p>
+    </div>
+    <button id="card-action-btn" class="action-btn">
+      <span id="card-btn-text">About Me</span>
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+  </div>
 
-        <div class="intro-tags">
-          <span>C / C++</span>
-          <span>Python</span>
-          <span>JavaScript</span>
-          <span>DSA</span>
-          <span>Computer Vision</span>
+  <!-- 1. INTRO DASHBOARD -->
+  <div id="intro-dashboard" class="dashboard-overlay hidden">
+    <div class="dashboard-panel intro-panel">
+      <button id="close-intro" class="close-btn" aria-label="Close modal">&times;</button>
+      <div class="intro-content">
+        <div class="intro-photo">
+          <img src="/radhika.jpg" alt="Radhika Sabale" />
+          <div class="photo-glow"></div>
         </div>
-
-        <div class="intro-links">
-          <a href="https://github.com/Radhika-Sabale" target="_blank">GitHub</a>
-          <a href="https://www.linkedin.com/in/radhika-sabale/" target="_blank">LinkedIn</a>
-          <a href="/resume.doc" target="_blank">Resume</a>
+        <div class="intro-text">
+          <span class="panel-eyebrow">ABOUT ME</span>
+          <h2>Radhika Sabale</h2>
+          <p class="intro-role">Information Technology Student · VIT Pune</p>
+          <p>
+            I’m an Information Technology student at VIT Pune passionate about building practical, high-impact tech solutions. I work with C, C++, and Python, have hands-on experience in full-stack web development and data tools like NumPy and pandas, and I’m actively mastering Data Structures & Algorithms while exploring machine learning, computer vision, and interactive 3D web environments.
+          </p>
+          <div class="intro-tags">
+            <span>C / C++</span>
+            <span>Python</span>
+            <span>JavaScript</span>
+            <span>Three.js</span>
+            <span>DSA</span>
+            <span>Computer Vision</span>
+            <span>Data Analysis</span>
+          </div>
+          <div class="intro-links">
+            <a href="https://github.com/Radhika-Sabale" target="_blank" class="btn-link">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/radhika-sabale/" target="_blank" class="btn-link">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 1 0 0-3.28 1.64 1.64 0 0 0 0 3.28m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg>
+              LinkedIn
+            </a>
+            <a href="/resume.pdf" target="_blank" class="btn-link primary">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="12" y2="18"/><line x1="15" y1="15" x2="12" y2="18"/></svg>
+              Resume PDF
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- 2. PROJECTS DASHBOARD -->
+  <div id="projects-dashboard" class="dashboard-overlay hidden">
+    <div class="dashboard-panel projects-panel">
+      <button id="close-projects" class="close-btn" aria-label="Close modal">&times;</button>
+      <div class="panel-header">
+        <span class="panel-eyebrow">PORTFOLIO WORK</span>
+        <h2>Featured Projects</h2>
+        <p class="panel-desc">A selection of technical implementations across Computer Vision, Algorithms, and Web Systems.</p>
+      </div>
+
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-badge">Computer Vision</div>
+          <h3>Object Detection & Tracking</h3>
+          <p>Real-time computer vision pipeline utilizing Python and OpenCV for bounding-box detection, motion contouring, and object trajectory tracking.</p>
+          <div class="project-tech">
+            <span>Python</span>
+            <span>OpenCV</span>
+            <span>NumPy</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-badge">Problem Solving</div>
+          <h3>DSA & Graph Algorithms Suite</h3>
+          <p>Efficient algorithmic implementations solving complex graph traversals, dynamic programming problems, and advanced tree data structures.</p>
+          <div class="project-tech">
+            <span>C++</span>
+            <span>Algorithms</span>
+            <span>Data Structures</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-badge">Interactive 3D</div>
+          <h3>3D Spatial Portfolio Room</h3>
+          <p>A virtual interactive 3D room experience built using Blender modeling, glTF 2.0 asset pipelines, Three.js, and free 360° navigation.</p>
+          <div class="project-tech">
+            <span>Three.js</span>
+            <span>Vite</span>
+            <span>Blender</span>
+            <span>GLSL</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-badge">Data Science</div>
+          <h3>Exploratory Data Analysis Engine</h3>
+          <p>Statistical processing and analytical dashboards parsing real-world datasets into visual insights and metric correlation matrices.</p>
+          <div class="project-tech">
+            <span>Python</span>
+            <span>Pandas</span>
+            <span>Matplotlib</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. GALLERY DASHBOARD -->
+  <div id="gallery-dashboard" class="dashboard-overlay hidden">
+    <div class="dashboard-panel gallery-panel">
+      <button id="close-gallery" class="close-btn" aria-label="Close modal">&times;</button>
+      <div class="panel-header">
+        <span class="panel-eyebrow">VISUAL EXPRESSION</span>
+        <h2>Artwork & Photography</h2>
+        <p class="panel-desc">Click any artwork to expand into full-resolution view.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-card">
+          <div class="gallery-img-wrap">
+            <img src="/the smile.jpeg" alt="The Smile" loading="lazy" />
+          </div>
+          <div class="gallery-info">
+            <h4>The Smile</h4>
+            <span>Visual Portrait</span>
+          </div>
+        </div>
+
+        <div class="gallery-card">
+          <div class="gallery-img-wrap">
+            <img src="/eyes.jpeg" alt="Eyes" loading="lazy" />
+          </div>
+          <div class="gallery-info">
+            <h4>Eyes</h4>
+            <span>Introspective Study</span>
+          </div>
+        </div>
+
+        <div class="gallery-card">
+          <div class="gallery-img-wrap">
+            <img src="/distance between.jpeg" alt="Distance Between" loading="lazy" />
+          </div>
+          <div class="gallery-info">
+            <h4>Distance Between</h4>
+            <span>Conceptual Piece</span>
+          </div>
+        </div>
+
+        <div class="gallery-card">
+          <div class="gallery-img-wrap">
+            <img src="/clrs.jpeg" alt="Colors" loading="lazy" />
+          </div>
+          <div class="gallery-info">
+            <h4>Colors</h4>
+            <span>Chromatic Exploration</span>
+          </div>
+        </div>
+
+        <div class="gallery-card">
+          <div class="gallery-img-wrap">
+            <img src="/temptation.jpeg" alt="Temptation" loading="lazy" />
+          </div>
+          <div class="gallery-info">
+            <h4>Temptation</h4>
+            <span>Digital Artwork</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal for Artworks -->
+  <div id="gallery-lightbox" class="lightbox-overlay hidden">
+    <button id="close-lightbox" class="lightbox-close" aria-label="Close preview">&times;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Full view" />
+      <p id="lightbox-caption" class="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <!-- 4. CONTACT DASHBOARD -->
+  <div id="contact-dashboard" class="dashboard-overlay hidden">
+    <div class="dashboard-panel contact-panel">
+      <button id="close-contact" class="close-btn" aria-label="Close modal">&times;</button>
+      <div class="panel-header">
+        <span class="panel-eyebrow">GET IN TOUCH</span>
+        <h2>Let's Connect</h2>
+        <p class="panel-desc">I’m always open to discussing new opportunities, creative collaborations, or engineering projects.</p>
+      </div>
+
+      <div class="contact-cards">
+        <a href="mailto:radhikasabale14@gmail.com" class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="contact-text">
+            <span class="contact-label">Email Me</span>
+            <span class="contact-val">radhikasabale14@gmail.com</span>
+          </div>
+        </a>
+
+        <a href="https://www.linkedin.com/in/radhika-sabale/" target="_blank" class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 1 0 0-3.28 1.64 1.64 0 0 0 0 3.28m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg>
+          </div>
+          <div class="contact-text">
+            <span class="contact-label">LinkedIn</span>
+            <span class="contact-val">linkedin.com/in/radhika-sabale</span>
+          </div>
+        </a>
+
+        <a href="https://github.com/Radhika-Sabale" target="_blank" class="contact-card">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          </div>
+          <div class="contact-text">
+            <span class="contact-label">GitHub</span>
+            <span class="contact-val">github.com/Radhika-Sabale</span>
+          </div>
+        </a>
+
+        <a href="/resume.pdf" target="_blank" class="contact-card highlight">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="12" y2="18"/><line x1="15" y1="15" x2="12" y2="18"/></svg>
+          </div>
+          <div class="contact-text">
+            <span class="contact-label">Curriculum Vitae</span>
+            <span class="contact-val">Download Resume PDF</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <script type="module" src="/src/main.js"></script>
 </body>

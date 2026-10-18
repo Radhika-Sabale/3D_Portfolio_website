@@ -1,4 +1,15 @@
-export function moveCameraTo(camera, controls, targetPosition, targetLookAt, duration = 1800) {
+let currentAnimationId = null;
+
+export function stopCameraMove() {
+  if (currentAnimationId) {
+    cancelAnimationFrame(currentAnimationId);
+    currentAnimationId = null;
+  }
+}
+
+export function moveCameraTo(camera, controls, targetPosition, targetLookAt, duration = 1400, onComplete = null) {
+  stopCameraMove();
+
   const startPosition = camera.position.clone();
   const startLookAt = controls.target.clone();
   const startTime = performance.now();
@@ -13,9 +24,12 @@ export function moveCameraTo(camera, controls, targetPosition, targetLookAt, dur
     controls.update();
 
     if (t < 1) {
-      requestAnimationFrame(animateFrame);
+      currentAnimationId = requestAnimationFrame(animateFrame);
+    } else {
+      currentAnimationId = null;
+      if (onComplete) onComplete();
     }
   }
 
-  requestAnimationFrame(animateFrame);
+  currentAnimationId = requestAnimationFrame(animateFrame);
 }
